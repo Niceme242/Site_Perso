@@ -1917,7 +1917,7 @@ form.addEventListener('submit', async (e) => {
       form.addEventListener('submit', function(e){ e.preventDefault();
         var name = document.getElementById('name').value.trim(); var email = document.getElementById('email').value.trim(); var msg = document.getElementById('message').value.trim(); var el = document.getElementById('formMsg');
         if(!name || !email || !msg){ el.textContent = 'Merci de renseigner nom, email et message.'; el.style.color = '#b45309'; return; }
-        el.textContent = 'Merci — votre message a été envoyé (démo).'; el.style.color = '#059669'; form.reset();
+        el.textContent = ' '; el.style.color = '#059669'; form.reset();
       });
     })();
 
