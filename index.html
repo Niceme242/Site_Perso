@@ -1,0 +1,2010 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Marland Niceme ISSANGOU — Consultant IT</title>
+<meta name="description" content="Ingénieur IT, consultant — j'accompagne entreprises et startups dans la conception d'architectures cloud sécurisées, l'automatisation des workflows et la résilience des systèmes.">
+<link rel="icon" href="img/fav.png" type="image/png">
+<link rel="apple-touch-icon" href="img/fav.png">
+
+<style>
+  /* ===== RESET ===== */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html,body { height:100%; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; background:#f5f7fb; color:#071029; }
+  a { color:inherit; text-decoration:none; }
+  img { display:block; max-width:100%; }
+
+
+  /* header container (fixed) - use safe-area for notch */
+  header {
+    position: fixed;
+    top: env(safe-area-inset-top, 6px);
+    left: 0;
+    right: 0;
+    z-index: 110;
+    background: transparent;
+    pointer-events: none; 
+    display: flex;
+    justify-content: center;
+  }
+
+  .nav-container {
+    pointer-events: auto;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* brand left, controls right */
+    gap: 12px;
+    box-sizing: border-box;
+  }
+
+  /* brand */
+  .brand {
+    font-weight: 800;
+    font-size: 16px;
+    color: #fff;
+    text-decoration: none;
+    background: rgba(255,255,255,0.06);
+    padding: 8px 12px;
+    border-radius: 8px;
+    box-shadow: 0 4px 14px rgba(2,6,23,0.12);
+    transition: all .16s ease;
+    z-index: 10002;
+  }
+  .brand:hover { transform: translateY(-2px); background: rgba(255,255,255,0.12); }
+
+  /* nav-right: group button + nav */
+  .nav-right { display:flex; align-items:center; gap:10px; }
+
+  /* menu toggle (mobile/tablet visible by default) */
+  .menu-toggle {
+    display: inline-block;
+    background: rgba(255,255,255,0.10);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 1.8rem;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(2,6,23,0.12);
+    z-index: 10005;
+  }
+
+  /* nav links (mobile): hidden by default, floating panel */
+  nav.nav-links {
+    display: none;
+    position: absolute;
+    top: calc(env(safe-area-inset-top, 6px) + 52px);
+    right: 12px;
+    min-width: 160px;
+    max-width: calc(100vw - 32px);
+    background: rgba(0,0,0,0.92);
+    border-radius: 10px;
+    padding: 8px 10px;
+    flex-direction: column;
+    gap: 6px;
+    box-shadow: 0 8px 30px rgba(2,6,23,0.32);
+    z-index: 10004;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  nav.nav-links.active { display: flex; }
+
+  nav.nav-links a {
+    color: #fff;
+    display:block;
+    padding: 8px 10px;
+    font-weight: 600;
+    border-radius: 6px;
+  }
+  nav.nav-links a:focus, nav.nav-links a:hover { background: rgba(255,255,255,0.04); }
+
+  /* ===== Desktop layout (>=1025px) ===== */
+  @media (min-width: 1025px) {
+    /* header slightly lower like original */
+    header { top: 14px; }
+
+    /* hide menu button */
+    .menu-toggle { display: none; }
+
+    /* nav becomes inline/horizontal, integrated into flow */
+    nav.nav-links {
+      display: flex !important;
+      position: static;
+      flex-direction: row;
+      gap: 12px;
+      background: transparent;
+      padding: 0;
+      box-shadow: none;
+      min-width: auto;
+      max-width: none;
+      align-items: center;
+    }
+
+    /* desktop nav styles (translucent over hero) */
+    nav.nav-links a {
+      color: #fff;
+      font-weight: 600;
+      padding: 9px 12px;
+      border-radius: 9px;
+      font-size: 15px;
+      background: rgba(255,255,255,0.06);
+      box-shadow: 0 3px 10px rgba(2,6,23,0.12);
+      transition: all 0.16s ease;
+    }
+    nav.nav-links a:hover, nav.nav-links a:focus {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,0.14);
+      outline: none;
+    }
+  }
+
+  /* ===== Mobile/tiny adjustments ===== */
+  @media (max-width: 820px) {
+    /* prevent header from pushing content: hero/main get padding-top */
+    .hero, main { padding-top: calc(48px + env(safe-area-inset-top, 6px)); }
+    main { margin-top: 0; } /* cancel negative margins from desktop */
+  }
+
+  @media (max-width: 480px) {
+    .brand { font-size: 14px; padding: 6px 10px; }
+    .menu-toggle { font-size: 1.95rem; padding: 6px 10px; }
+    nav.nav-links { right: 8px; top: calc(env(safe-area-inset-top,6px) + 48px); min-width: 140px; }
+  }
+
+  /* =========================
+     Rest of the original CSS (hero / main / cards etc.)
+     I kept original rules but removed duplicates from your version.
+     ========================= */
+
+  /* ===== HERO ===== */
+  .hero { position:relative; min-height:70vh; display:flex; align-items:center; color:#fff; overflow:hidden; }
+  .bg { position:absolute; inset:0; background-size:cover; background-position:center; z-index:0; filter:brightness(.46) contrast(.95) saturate(.95); transition: transform 0.9s cubic-bezier(.2,.9,.2,1); }
+  .hero::before { content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.6)); z-index:1; pointer-events:none; }
+  .hero-inner { position:relative; z-index:3; width:100%; max-width:1200px; margin:0 auto; padding:60px 20px; display:flex; gap:28px; align-items:center; justify-content:space-between; }
+  .intro { max-width:760px; }
+  .kicker { font-size:13px; letter-spacing:.08em; color:rgba(255,255,255,0.92); text-transform:uppercase; margin-bottom:8px; }
+  h1 { font-size:44px; line-height:1.05; font-weight:800; margin-bottom:10px; text-shadow:0 6px 18px rgb(255, 255, 255); }
+  .tagline { font-size:17px; color:rgba(255,255,255,0.94); max-width:72%; }
+  .cta-row { margin-top:16px; display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+  .btn { padding:11px 14px; border-radius:10px; font-weight:700; cursor:pointer; display:inline-flex; gap:10px; align-items:center; border:none; font-size:15px; }
+  .btn-primary { background:linear-gradient(90deg,#0ea5ff,#7c3aed); color:#fff; box-shadow:0 8px 26px rgba(124,58,237,0.18); }
+  .btn-ghost { background:rgba(255,255,255,0.08); color:#fff; }
+
+  .hero-card { width:260px; min-width:200px; background:rgba(255,255,255,0.06); border-radius:12px; padding:14px; backdrop-filter: blur(6px); box-shadow:0 10px 30px rgba(2,6,23,0.32); display:flex; gap:12px; align-items:center; }
+
+  /* ===== AVATAR ===== */
+  .avatar { width: 120px; height: 120px; border-radius: 14px; overflow: hidden; border: 4px solid rgba(255,255,255,0.25); box-shadow: 0 6px 24px rgba(0,0,0,0.3); display: block; flex: 0 0 auto; background-color: #e6eef8; }
+  .avatar img { width:100%; height:100%; object-fit:cover; display:block; }
+  .hero-card .avatar img { animation: fadeInProfile 1.2s ease forwards; }
+  @keyframes fadeInProfile { from { opacity:0; transform:scale(0.85);} to { opacity:1; transform:scale(1);} }
+  .role { font-weight:800; font-size:15px; color:inherit; }
+  .meta { font-size:13px; opacity:0.9; margin-top:4px; color:inherit; }
+  .hero:hover .bg { transform: scale(1.03); }
+
+  /* ===== MAIN ===== */
+  main { max-width:1200px; margin: -80px auto 60px; padding:0 20px; z-index:2; position:relative; }
+  .card { background:#fff; border-radius:12px; padding:22px; box-shadow:0 12px 30px rgba(8,15,25,0.06); margin-bottom:26px; }
+  .grid-3 { display:grid; grid-template-columns: repeat(3,1fr); gap:18px; }
+  .grid-2 { display:grid; grid-template-columns: 1fr 360px; gap:20px; align-items:start; }
+
+  h2 { font-size:20px; margin-bottom:14px; color:#071029; }
+  p.lead { color:#334155; line-height:1.5; }
+
+  .project { border-radius:10px; overflow:hidden; background:#0b1220; color:#fff; display:flex; flex-direction:column; min-height:170px; position:relative; transform:translateY(14px); opacity:0; transition:all .7s cubic-bezier(.2,.9,.2,1); }
+  .project.visible { transform:translateY(0); opacity:1; }
+  .project .thumb { height:110px; background-size:cover; background-position:center; filter:brightness(0.72) saturate(.95); }
+  .project .body { padding:12px; display:flex; flex-direction:column; gap:8px; }
+  .project .title { font-weight:800; font-size:15px; }
+  .project .desc { font-size:13px; color:rgba(255,255,255,0.92); line-height:1.35; flex:1; }
+  .tags { display:flex; gap:8px; margin-top:8px; flex-wrap:wrap; }
+  .tag { font-size:12px; background:rgba(255,255,255,0.06); padding:6px 8px; border-radius:8px; color:#fff; }
+
+  .contact-box { display:flex; flex-direction:column; gap:10px; padding:14px; border-radius:10px; background:linear-gradient(180deg,#ffffff,#fbfdff); box-shadow:0 6px 18px rgba(8,15,25,0.04); }
+
+  .socials { display:flex; gap:8px; margin-top:8px; }
+  .social-btn { display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:8px; background:#0b1220; color:#fff; font-weight:700; text-decoration:none; box-shadow:0 6px 18px rgba(2,6,23,0.12); border:none; cursor:pointer; }
+
+  .partners-wrap { margin:20px 0 6px; background:linear-gradient(180deg,#fff,#fbfdff); border-radius:10px; padding:14px; box-shadow:0 10px 30px rgba(8,15,25,0.04); }
+  .partners-inner { overflow:hidden; position:relative; }
+  .partners-track { display:flex; gap:28px; align-items:center; animation:scrollLeft 18s linear infinite; }
+  .partners-item { flex:0 0 auto; display:flex; align-items:center; gap:12px; padding:8px 12px; border-radius:10px; background:#fff; border:1px solid #eef6ff; box-shadow:0 6px 18px rgba(8,15,25,0.03); min-width:160px; justify-content:center; text-align:center; }
+  .partners-item img { max-height:36px; object-fit:contain; display:block; }
+  @keyframes scrollLeft { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
+
+  .testimonial { padding:14px; border-radius:10px; background:linear-gradient(180deg,#0ea5ff10,#7c3aed08); border:1px solid rgba(12,18,34,0.04); }
+
+  footer.site-footer { margin-top:34px; background:#071029; color:#cfe8ff; padding:34px 20px; border-radius:12px; }
+  .footer-grid { max-width:1200px; margin:0 auto; display:grid; grid-template-columns: 1fr 220px 220px; gap:20px; align-items:start; }
+  .footer-brand { font-weight:800; font-size:18px; color:#fff; margin-bottom:8px; }
+
+  .muted { color:#6b7280; }
+  .small { font-size:13px; color:#475569; }
+  .sr-only { position:absolute; left:-10000px; top:auto; width:1px; height:1px; overflow:hidden; }
+
+  /* Responsive tweaks kept from original */
+  @media (max-width:1000px) {
+    .grid-3 { grid-template-columns: repeat(2, 1fr); }
+    .hero-inner { padding:44px 18px; gap:18px; }
+  }
+
+  @media (max-width:820px) {
+    /* hero stacked so card doesn't overlap */
+    .hero-inner { flex-direction:column; align-items:stretch; gap:16px; padding:20px 16px; }
+    .hero-card {
+      width:100% !important;
+      min-width:auto !important;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:12px;
+      background:linear-gradient(180deg,#ffffff,#fbfdff);
+      color:#071029;
+      border-radius:12px;
+      box-shadow:0 8px 22px rgba(8,15,25,0.06);
+      backdrop-filter:none !important;
+      border:1px solid rgba(10,20,40,0.04);
+      z-index:5;
+    }
+    .hero-card .avatar { width:84px; height:84px; border-radius:10px; border:2px solid rgba(4,10,25,0.06); }
+    .hero-card .hero-info { min-width:0; overflow:hidden; }
+    .hero-card .role, .hero-card .meta { white-space:nowrap; text-overflow:ellipsis; overflow:hidden; }
+
+    h1 { font-size:28px; }
+    .tagline { font-size:14px; max-width:100%; }
+
+    main { margin:8px auto 40px; padding-top:0; position:relative; }
+
+    #contact, #partners, #testimonials, footer.site-footer {
+      max-width:760px;
+      margin-left:auto;
+      margin-right:auto;
+    }
+    .footer-grid { grid-template-columns: 1fr; gap:12px; }
+    .footer-grid > div { text-align:center; }
+    .footer-socials { justify-content:center; }
+  }
+
+  @media (max-width:480px) {
+    .hero-inner { padding:14px; }
+    .hero-card { padding:10px; }
+    .tagline { font-size:13px; }
+  }
+
+  @media (max-width:600px) {
+    .grid-3 { grid-template-columns:1fr; }
+    .grid-2 { grid-template-columns:1fr; }
+    .partners-track { animation-duration:24s; }
+  }
+
+
+.contact-infos {
+  margin-top: 12px;
+  text-align: center; /* centre tout le contenu */
+  background: linear-gradient(90deg, #0b1220, #111b30);
+  color: #cfe8ff;
+  padding: 16px 20px;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(2,6,23,0.25);
+}
+
+.contact-infos div {
+  margin-top: 8px;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.contact-infos strong {
+  color: #7c3aed; /* violet élégant pour les libellés */
+  margin-right: 6px;
+}
+
+.contact-infos a {
+  color: #0ea5ff; /* bleu clair pour les liens email */
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.contact-infos a:hover {
+  text-decoration: underline;
+}
+
+.contact-infos span {
+  color: #e5eaff; /* texte clair pour le contenu */
+}
+
+
+/* ===========================
+   SECTION CONTACT - MODERN DESIGN
+   =========================== */
+.contact-modern {
+  --accent: #0ea5ff;
+  --accent2: #7c3aed;
+  --bg-light: #f9fbff;
+  --text: #071029;
+  --muted: rgba(7,16,41,0.6);
+  color: var(--text);
+  padding: 24px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  box-shadow: 0 10px 35px rgba(2,6,23,0.08);
+}
+
+.contact-modern h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+}
+
+/* Layout grid */
+.contact-modern .contact-layout {
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+/* Formulaire */
+.contact-modern form {
+  flex: 1;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 30px rgba(8,15,30,0.08);
+}
+
+.contact-modern input,
+.contact-modern textarea {
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(7,16,41,0.1);
+  font-size: 15px;
+  color: var(--text);
+  background: var(--bg-light);
+  transition: all 0.15s ease;
+}
+
+.contact-modern input:focus,
+.contact-modern textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 6px 20px rgba(14,165,255,0.15);
+  outline: none;
+}
+
+.contact-modern textarea {
+  resize: vertical;
+  min-height: 140px;
+}
+
+/* Buttons */
+.contact-modern .form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.contact-modern .btn {
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.contact-modern .btn-primary {
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  color: white;
+  box-shadow: 0 6px 22px rgba(124,58,237,0.15);
+}
+
+.contact-modern .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(14,165,255,0.25);
+}
+
+.contact-modern .btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid rgba(7,16,41,0.15);
+}
+
+.contact-modern .btn-ghost:hover {
+  background: rgba(14,165,255,0.05);
+  border-color: var(--accent);
+}
+
+/* Form message */
+.contact-modern .form-msg {
+  min-height: 20px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* Sidebar */
+.contact-modern .contact-sidebar {
+  width: 320px;
+  min-width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.contact-modern .info-card {
+  background: linear-gradient(180deg, rgba(14,165,255,0.08), rgba(124,58,237,0.08));
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 8px 30px rgba(8,15,30,0.08);
+}
+
+.contact-modern .info-card h3 {
+  margin-top: 0;
+  color: var(--accent2);
+  font-weight: 800;
+}
+
+.contact-modern .info-card strong {
+  color: var(--accent);
+  display: block;
+  margin-top: 8px;
+}
+
+.contact-modern .small.muted {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.contact-modern .spacer {
+  height: 10px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .contact-modern .contact-layout {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .contact-modern .contact-sidebar {
+    width: 100%;
+  }
+}
+
+/* ---------- THEME ---------- */
+:root{
+  --bg: #f6f8fb;
+  --card: #ffffff;
+  --muted: #6c727a;
+  --text: #0b1220;
+  --accent: #0b4f6c;   /* deep teal/navy feel */
+  --accent-2: #0f9aa8;
+  --glass: rgba(255,255,255,0.6);
+  --radius: 12px;
+  --shadow: 0 10px 30px rgba(11,18,30,0.06);
+  --max-w: 1180px;
+  --fw-semibold: 600;
+  --fw-regular: 400;
+  --space: 24px;
+  font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* ---------- LAYOUT ---------- */
+.work-card {
+  max-width: var(--max-w);
+  margin: 36px auto;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.work-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 28px;
+  align-items: start;
+  padding: var(--space);
+}
+
+/* Make aside sticky on wide screens */
+@media (min-width: 1100px){
+  .work-aside { position: sticky; top: 28px; align-self: start; }
+}
+
+/* Responsive: single column */
+@media (max-width: 1024px){
+  .work-grid { grid-template-columns: 1fr; padding: 18px; }
+  .work-aside { margin-top: 12px; }
+}
+
+/* ---------- CARDS ---------- */
+.work-main, .work-aside .aside-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(11,18,30,0.04);
+  padding: 22px;
+}
+
+/* Header */
+.work-header h2 {
+  margin: 0 0 6px 0;
+  font-size: 1.45rem;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  font-weight: var(--fw-semibold);
+}
+.lead { margin: 0; color: var(--muted); font-size: 0.98rem; }
+
+/* ---------- ACHIEVEMENTS ---------- */
+.achievements { display: grid; gap: 18px; margin-top: 16px; }
+
+.achievement {
+  padding: 18px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(250,250,251,0.9), #ffffff);
+  border: 1px solid rgba(11,18,30,0.03);
+  transition: transform .16s ease, box-shadow .16s ease;
+}
+.achievement:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(11,18,30,0.06); }
+
+.meta { font-size: 0.9rem; color: var(--muted); margin-bottom: 6px; }
+.meta .role { font-weight: 600; color: var(--accent); margin-right: 6px; }
+.title { margin: 0 0 8px 0; font-size: 1.02rem; color: var(--text); font-weight: 600; }
+.desc { margin: 0; color: var(--muted); line-height: 1.45; font-size: 0.96rem; }
+
+/* KPI row */
+.kpi-row { display:flex; gap:12px; margin-top:12px; }
+.kpi { background: rgba(11,79,108,0.06); padding:8px 12px; border-radius:8px; text-align:center; min-width:92px; }
+.kpi strong { display:block; color:var(--accent); font-weight:700; font-size:1rem; }
+.kpi-label { display:block; font-size:0.8rem; color:var(--muted); margin-top:4px; }
+
+/* ---------- ASIDE / CONTACT ---------- */
+.work-aside { }
+
+.aside-card { padding: 20px; }
+
+/* Contact */
+.contact-name { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+.contact-list { margin: 0; padding: 0; list-style: none; }
+.contact-row { display:flex; align-items:center; margin: 8px 0; }
+.contact-row dt { width:0; height:0; overflow:hidden; position:absolute; }
+.contact-row dd { margin: 0; }
+.contact-link {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  text-decoration: none;
+  color: var(--text);
+  padding: 8px 10px;
+  border-radius: 8px;
+  transition: background .14s ease, transform .14s ease;
+}
+.contact-link:hover { background: rgba(11,79,108,0.04); transform: translateY(-2px); }
+.contact-link:focus-visible { outline: 3px solid rgba(11,79,108,0.14); outline-offset: 3px; border-radius: 8px; }
+
+.icon { width:18px; height:18px; flex: 0 0 18px; fill: currentColor; color: var(--accent); }
+
+/* contact text */
+.contact-text { font-size: 0.95rem; color: var(--text); }
+
+/* plain contact (location) */
+.contact-plain { display:flex; gap:10px; align-items:center; color:var(--muted); }
+
+/* ---------- SOCIAL BUTTONS ---------- */
+.social-row { display:flex; gap:10px; margin: 12px 0; }
+.social-btn {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:40px; height:40px;
+  border-radius:10px;
+  background: linear-gradient(180deg, var(--accent), var(--accent-2));
+  color: #fff;
+  transition: transform .14s ease, box-shadow .14s ease;
+  text-decoration: none;
+}
+.social-btn:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(11,18,30,0.12); }
+.social-btn svg { width:18px; height:18px; fill: #fff; }
+
+/* ---------- TAG LIST ---------- */
+.tag-list { margin:0; padding-left: 16px; }
+.tag-list li { margin: 6px 0; color: var(--muted); }
+
+/* ---------- FOOTER & UTILS ---------- */
+.aside-footer { margin-top:12px; font-size:0.88rem; color:var(--muted); }
+
+/* Divider compact */
+hr.d-compact { border: 0; height:1px; background: rgba(11,18,30,0.04); margin: 14px 0; }
+
+/* Accessibility helpers */
+.sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+
+/* Print adjustments */
+@media print {
+  body { background: #fff; color:#000; }
+  .work-grid { grid-template-columns: 1fr; }
+  .social-row, .kpi-row { display:none; }
+  .work-main, .aside-card { box-shadow:none; border: 1px solid #eee; }
+}
+
+/* ===========================
+   FIX: header / spacing / sticky behavior
+   =========================== */
+
+/* 1) Assure les sections aient un espacement vertical évident */
+section {
+  margin-top: 28px;   /* espace entre sections */
+  margin-bottom: 28px;
+  box-sizing: border-box;
+}
+
+/* Plus fort si tu veux qu'il démarre plus bas (changez la valeur si besoin) */
+.work-card { margin-top: 40px; }
+
+/* 2) Remet l'entête en flux normal (évite qu'il "reste collé" au scroll) */
+.work-header,
+.work-header * {
+  position: static !important;
+  top: auto !important;
+  left: auto !important;
+  transform: none !important;
+}
+
+/* 3) Sidebar sticky uniquement (défini explicitement) :
+   - .work-aside devient sticky à partir d'un certain breakpoint
+   - on évite sticky si un parent a transform (transform crée un new stacking context
+     et casse le sticky). Ici on neutralise transform sur ancêtres connus. */
+.work-aside {
+  position: static;
+}
+
+/* Remove transforms on immediate ancestors that might break sticky */
+.work-card, .work-grid, .work-main {
+  transform: none !important;
+  -webkit-transform: none !important;
+}
+
+/* Make aside sticky only on wide screens (override earlier) */
+@media (min-width: 1100px) {
+  .work-aside {
+    position: sticky;
+    top: 28px;
+    align-self: start;
+  }
+}
+
+/* 4) Ensure header z-index is behind sticky aside but above previous content */
+.work-header {
+  position: relative;
+  z-index: 1;
+}
+
+/* 5) If previous section uses negative margins, neutralize collisions for this area */
+.work-card {
+  /* Avoid overlap if previous section used negative margin */
+  clear: both;
+  z-index: 0;
+}
+
+/* 7) Minor: ensure smooth reflow on mobile */
+@media (max-width: 1024px) {
+  .work-card { margin-top: 20px; }
+  section { margin-top: 18px; margin-bottom:18px; }
+}
+
+/* 8) Accessibility: avoid focusable elements hidden under previous content */
+:focus {
+  outline-offset: 3px;
+}
+
+/* === ALIGNEMENT PARFAIT DES ICONS SOCIAUX === */
+
+.social-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  text-decoration: none;
+  background: var(--accent);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.social-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+}
+
+/* Icônes SVG : taille et alignement uniformes */
+.social-btn .icon {
+  width: 20px;
+  height: 20px;
+  fill: #ffffff;
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+/* Correction des viewBox irréguliers (Facebook notamment) */
+.social-btn svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+  aspect-ratio: 1/1;
+  vertical-align: middle;
+}
+
+/* Couleurs propres à chaque réseau */
+.social-btn[aria-label="LinkedIn"] { background: #0a66c2; }
+.social-btn[aria-label="Facebook"] { background: #1877f2; }
+.social-btn[aria-label="Instagram"] {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+}
+
+/* Option : effet d'ombre plus doux sur mobile */
+@media (max-width: 768px) {
+  .social-btn { width: 38px; height: 38px; }
+  .social-btn .icon { width: 18px; height: 18px; }
+}
+
+/* === ALIGNEMENT DES ICONES CONTACT (téléphone, mail, adresse) === */
+
+.contact-list,
+.contact-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+}
+
+.contact-row dd,
+.contact-plain {
+  display: flex;
+  align-items: center;          /* Aligne verticalement texte et icône */
+  gap: 10px;                    /* Espace uniforme entre icône et texte */
+  margin: 0;
+  padding: 4px 0;
+}
+
+.contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--text);
+  padding: 6px 8px;
+  border-radius: 8px;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.contact-link:hover {
+  background: rgba(11,79,108,0.05);
+  transform: translateY(-2px);
+}
+
+.contact-link:focus-visible {
+  outline: 3px solid rgba(11,79,108,0.14);
+  outline-offset: 3px;
+}
+
+/* Taille et centrage uniformes des icônes */
+.contact-link .icon,
+.contact-plain .icon {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  fill: var(--accent);
+  flex-shrink: 0;               /* Empêche l'icône de se compresser */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Texte du contact (téléphone, mail, adresse) */
+.contact-text {
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: var(--text);
+  word-break: break-word;
+}
+
+/* Option : légère marge interne pour la lisibilité */
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Sur mobile : ajustement pour éviter les espacements excessifs */
+@media (max-width: 768px) {
+  .contact-link, .contact-plain { gap: 8px; }
+  .contact-link .icon, .contact-plain .icon { width: 16px; height: 16px; }
+  .contact-text { font-size: 0.9rem; }
+}
+
+
+/* ============================
+   🔧 C6 — Correctif global d’alignement, typographie & icônes
+   Appliquer à la fin du fichier CSS pour corriger tous les décalages.
+   ============================ */
+
+/* === ALIGNEMENT GENERAL DES ICONES SVG (contact + social) === */
+svg.icon,
+.social-btn svg,
+.contact-link svg,
+.contact-plain svg {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  min-height: 20px;
+  fill: currentColor;
+  vertical-align: middle;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+/* === ALIGNEMENT DES LIGNES DE CONTACT (📞, ✉️, 📍) === */
+.contact-row,
+.contact-plain,
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 4px 0;
+  text-decoration: none;
+  color: var(--text);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.contact-link:hover {
+  background: rgba(11, 79, 108, 0.06);
+  transform: translateY(-2px);
+  border-radius: 8px;
+}
+
+.contact-link .contact-text,
+.contact-plain .contact-text {
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+/* === FOOTER & SOCIALS === */
+.social-row,
+.footer-socials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.social-btn,
+.footer-socials a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.social-btn:hover,
+.footer-socials a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Uniformisation des SVG dans les boutons */
+.social-btn svg,
+.footer-socials svg {
+  width: 20px;
+  height: 20px;
+  fill: #fff;
+  display: block;
+  vertical-align: middle;
+}
+
+/* === COULEURS PERSONNALISÉES PAR RÉSEAU === */
+.social-btn[aria-label="LinkedIn"],
+.footer-socials a[aria-label="LinkedIn"] {
+  background: #0a66c2;
+}
+
+.social-btn[aria-label="Facebook"],
+.footer-socials a[aria-label="Facebook"] {
+  background: #1877f2;
+}
+
+.social-btn[aria-label="Instagram"],
+.footer-socials a[aria-label="Instagram"] {
+  background: linear-gradient(
+    45deg,
+    #f09433 0%,
+    #e6683c 25%,
+    #dc2743 50%,
+    #cc2366 75%,
+    #bc1888 100%
+  );
+}
+
+/* === TITRES & TEXTE GLOBAL (harmonisation pro US) === */
+h1, h2, h3, h4, h5 {
+  font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  line-height: 1.3;
+  margin-top: 0;
+}
+
+#work h2,
+.work-header h2 {
+  font-size: 1.25rem !important;
+  margin-bottom: 6px;
+}
+
+#work h3,
+.work-main h3.title {
+  font-size: 1.05rem !important;
+  margin-bottom: 4px;
+}
+
+#work .lead,
+.work-header .lead {
+  font-size: 0.95rem !important;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+/* === ESPACEMENT ENTRE SECTIONS === */
+section {
+  margin-top: 40px !important;
+  padding-top: 10px !important;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 0;
+}
+
+/* === OPTIMISATION MOBILE === */
+@media (max-width: 768px) {
+  .social-btn,
+  .footer-socials a {
+    width: 36px;
+    height: 36px;
+  }
+  .social-btn svg,
+  .footer-socials svg {
+    width: 18px;
+    height: 18px;
+  }
+  .contact-link .contact-text {
+    font-size: 0.9rem;
+  }
+  #work h2 { font-size: 1.15rem !important; }
+  #work h3 { font-size: 1rem !important; }
+}
+
+/* === FIX BANDE BLANCHE ENTRE NAVBAR ET BACKGROUND === */
+
+/* 1. Supprime les marges par défaut du body et html */
+html, body {
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: #0000; /* transparent */
+}
+
+/* 2. Si ta navbar a un fond spécifique, assure la continuité */
+nav, .navbar, header {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
+/* 3. Supprime toute marge sur la première section ou hero */
+section:first-of-type,
+.hero,
+.hero-header,
+.header-block {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* 4. Si tu utilises un gradient ou une image de fond, assure-toi qu'il couvre tout */
+.hero,
+header,
+.hero-header {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* 5. Corrige le gap parfois causé par line-height sur le body */
+body {
+  line-height: 1.4;
+}
+
+/* 6. Supprime les espacements inter-blocs accidentels */
+* {
+  box-sizing: border-box;
+}
+
+/* === CENTRAGE ET ESPACEMENT DU HEADER === */
+
+.header-intro,
+.hero-header,
+.contact-name {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px; /* espace régulier entre les lignes */
+}
+
+/* Ligne supérieure : fonctions / rôles */
+.header-role,
+.contact-role,
+.top-role {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+  margin: 0 0 4px 0;
+}
+
+/* Nom complet */
+.contact-name,
+.hero-name {
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.2;
+  margin: 0;
+}
+
+/* Accent sur le nom de famille */
+.contact-name .bold,
+.hero-name .bold {
+  color: var(--accent);
+}
+
+/* Sous-texte / paragraphe de présentation */
+.header-desc,
+.contact-desc,
+.hero-desc {
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.5;
+  max-width: 700px;
+  margin: 6px auto 0;
+  text-align: center;
+}
+
+/* Optionnel : centrage du bloc dans la carte ou section */
+.header-block,
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px 10px;
+}
+
+/* Sur mobile : taille adaptée */
+@media (max-width: 768px) {
+  .contact-name,
+  .hero-name {
+    font-size: 1.4rem;
+  }
+  .header-role,
+  .contact-role {
+    font-size: 0.8rem;
+  }
+  .header-desc {
+    font-size: 0.9rem;
+  }
+}
+.contact-name {
+  text-align: center;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+
+.contact-name .bold {
+  font-weight: 800;
+  color: var(--accent);
+}
+
+/* Sous-titre : rôle / fonction */
+.contact-role {
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+/* Centrer le nom et le sous-titre */
+.contact-name {
+  text-align: center;        /* Centre horizontalement le contenu */
+  display: flex;
+  flex-direction: column;    /* Aligne le texte et le paragraphe en colonne */
+  align-items: center;       /* Centre tout le contenu */
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+
+/* Met en valeur le nom de famille */
+.contact-name .bold {
+  font-weight: 800;
+  color: var(--accent);
+}
+
+/* Style du paragraphe sous le nom */
+.contact-role {
+  margin: 4px 0 0;          /* Petit espace au-dessus */
+  font-size: 0.9rem;
+  color: var(--muted);
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  text-align: center;        /* Centre le texte du paragraphe aussi */
+}
+
+.form-msg {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  text-align: center;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+
+.footer-socials {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  background-color: transparent;
+  border: 1.6px solid rgba(255,255,255,0.7);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.social-icon {
+  width: 16px;
+  height: 16px;
+  fill: white;
+  transition: transform 0.3s ease, fill 0.3s ease;
+}
+
+/* Effet au survol */
+.social-link:hover {
+  background-color: white;
+}
+
+.social-link:hover .social-icon {
+  fill: #0d1a2b; /* couleur foncée pour contraster au survol */
+  transform: scale(1.1);
+}
+
+
+
+<!-- FORÇAGE : .contact-sidebar côte-à-côte sur PC, empilé sur mobile
+     Coller ce bloc juste avant </body> -->
+<style>
+/* Force minimale, aucune couleur/modification visuelle */
+.contact-sidebar {
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 16px !important;
+  box-sizing: border-box !important;
+}
+
+/* Cards : réserver comportement par défaut */
+.contact-sidebar .info-card {
+  width: 100% !important;
+  max-width: 100% !important;
+  flex: 0 0 auto !important;
+  box-sizing: border-box !important;
+}
+
+/* Desktop : côte à côte */
+@media (min-width: 992px) {
+  .contact-sidebar {
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+  }
+  .contact-sidebar .info-card {
+    flex: 1 1 48% !important;
+    max-width: 48% !important;
+  }
+}
+</style>
+
+<script>
+(function(){
+  // secours JS : applique en inline styles si le CSS est surclassé ailleurs
+  function applyLayout() {
+    var sidebar = document.querySelector('.contact-sidebar');
+    if (!sidebar) {
+      console.warn('contact-sidebar introuvable — vérifie la classe.');
+      return;
+    }
+
+    // assure le parent n'a pas de contraintes bloquantes (grid with one column / transform)
+    var p = sidebar.parentElement;
+    if (p) {
+      try {
+        p.style.setProperty('display', p.style.display || getComputedStyle(p).display, 'important');
+        // enlever transform sur ancêtres qui peuvent casser le comportement
+        var el = sidebar;
+        while (el && el !== document.body) {
+          var cs = getComputedStyle(el);
+          if (cs.transform && cs.transform !== 'none') {
+            el.style.setProperty('transform', 'none', 'important');
+          }
+          el = el.parentElement;
+        }
+      } catch (e) {
+        console.warn('Impossible d\'ajuster le parent :', e);
+      }
+    }
+
+    // appliquer styles inline (desktop vs mobile)
+    var mq = window.matchMedia('(min-width: 992px)');
+    var cards = sidebar.querySelectorAll('.info-card');
+
+    function setForDesktop() {
+      sidebar.style.setProperty('display','flex','important');
+      sidebar.style.setProperty('flex-direction','row','important');
+      sidebar.style.setProperty('gap','16px','important');
+      sidebar.style.setProperty('justify-content','space-between','important');
+      sidebar.style.setProperty('align-items','flex-start','important');
+      sidebar.style.setProperty('width','100%','important');
+      cards.forEach(function(c){
+        c.style.setProperty('flex','1 1 48%','important');
+        c.style.setProperty('max-width','48%','important');
+        c.style.setProperty('width','48%','important');
+        c.style.setProperty('box-sizing','border-box','important');
+      });
+    }
+    function setForMobile() {
+      sidebar.style.setProperty('display','flex','important');
+      sidebar.style.setProperty('flex-direction','column','important');
+      sidebar.style.setProperty('gap','16px','important');
+      sidebar.style.removeProperty('justify-content');
+      sidebar.style.removeProperty('align-items');
+      cards.forEach(function(c){
+        c.style.setProperty('flex','0 0 auto','important');
+        c.style.setProperty('max-width','100%','important');
+        c.style.setProperty('width','100%','important');
+      });
+    }
+
+    if (mq.matches) setForDesktop(); else setForMobile();
+
+    // update on resize / orientation change
+    function onResize(){ if (window.matchMedia('(min-width: 992px)').matches) setForDesktop(); else setForMobile(); }
+    window.removeEventListener('resize', onResize); // ensure single listener
+    window.addEventListener('resize', onResize);
+    window.removeEventListener('orientationchange', onResize);
+    window.addEventListener('orientationchange', onResize);
+
+    console.info('Disposition forcée appliquée à .contact-sidebar (cards:', cards.length, ')');
+  }
+
+  // apply after DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', applyLayout);
+  } else applyLayout();
+})();
+</script>
+
+
+</style>
+</head>
+<body>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+
+<!-- HEADER NAV -->
+<header>
+  <div class="nav-container" role="navigation" aria-label="Navigation principale">
+    <!-- Brand (left) -->
+    <a href="#home" class="brand" id="brandName">Marland Nicème</a>
+
+    <!-- Right controls -->
+    <div class="nav-right">
+      <button class="menu-toggle" aria-expanded="false" aria-controls="mainNav" aria-label="Ouvrir le menu">☰</button>
+      <nav id="mainNav" class="nav-links" aria-label="Liens de navigation">
+        <a href="#about">À propos</a>
+        <a href="#projects">Projets</a>
+        <a href="#work">Réalisations</a>
+        <a href="#testimonials">Témoignages</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="home" aria-label="Bannière principale">
+  <div class="bg" id="heroBg" style="background-image:url('img/back.png');" aria-hidden="true"></div>
+
+  <div class="hero-inner">
+    <div class="intro">
+      <div class="kicker">Consultant IT • Ingénieur • Entrepreneur</div>
+      <h1 id="displayName">Marland Niceme ISSANGOU</h1>
+      <p class="tagline" id="displayDesc">Ingénieur IT, consultant — j'accompagne entreprises et startups dans la conception d'architectures cloud sécurisées, l'automatisation des workflows et la résilience des systèmes pour soutenir une croissance durable.</p>
+
+      <div class="cta-row">
+        <button class="btn btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Me contacter</button>
+        <a class="btn btn-ghost" href="#projects">Voir les projets</a>
+      </div>
+
+      <div style="margin-top:12px;" class="small muted">Disponible pour missions, ateliers et conférences.</div>
+    </div>
+
+    <div class="hero-card" role="region" aria-label="Profil">
+      <div class="avatar">
+        <img src="img/Profil.png" alt="Photo de Marland Niceme ISSANGOU">
+      </div>
+      <div class="hero-info">
+        <div class="role">Consultant IT</div>
+        <div class="meta">Cloud • Sécurité • Automatisation</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN (rest unchanged) -->
+<main>
+  <!-- ABOUT -->
+  <section id="about" class="card" aria-labelledby="aboutTitle">
+    <h2 id="aboutTitle">
+      À propos</h2>
+    <p class="lead">Consultant IT spécialisé en réseaux, sécurité, développement d'applications et de sites web. Fort de plus de 5 ans d’expérience, j’accompagne les entreprises dans la conception d’environnements sécurisés, l’automatisation des processus et le développement d’outils internes. Mon approche allie performance, fiabilité et conformité grâce à l’intégration de bonnes pratiques DevOps et de supervision continue.</p>
+    <div style="display:flex;gap:18px;margin-top:16px;flex-wrap:wrap;">
+      <div style="min-width:160px;">
+        <strong>Compétences clés</strong>
+        <ul class="small muted" style="margin-top:8px;">
+          <li>Support IT</li>
+          <li>Admin reseaux & systèmes</li>
+          <li>CI/CD & Observabilité</li>
+           <li>Sécurité & Conformité (SOC2, CIS)</li>
+        </ul>
+      </div>
+      <div style="min-width:200px;">
+        <strong>Prestation</strong>
+        <ul class="small muted" style="margin-top:8px;">
+          <li>Stratégie & Roadmap</li>
+          <li>Ateliers & Formations</li>
+          <li>Implémentation terrain</li>
+          <li>Accompagnement & Expertise</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="card" aria-labelledby="projectsTitle">
+    <h2 id="projectsTitle">Projets sélectionnés</h2>
+
+    <div class="grid-3" style="margin-top:12px;">
+      <!-- Projet 1 -->
+      <article class="project" role="article" aria-label="Migration Cloud entreprise">
+        <div class="thumb" style="background-image:url('img/fcrm.jpg');"></div>
+        <div class="body">
+          <div class="title">Mise en place d'un reseau Intranet</div>
+          <div class="desc">Déploiement d’un Intranet au sein du bâtiment de la Fondation Congolaise pour la Recherche Médicale (FCRM) performant, conçu pour fluidifier la communication interne et simplifier la gestion des informations.</div>
+          <div class="tags"><span class="tag">Windows Server / Active Directory</span><span class="tag">SharePoinT</span><span class="tag">Dynamics CRM</span></div>
+        </div>
+      </article>
+
+      <!-- Projet 2 -->
+      <article class="project" role="article" aria-label="Renforcement sécurité">
+        <div class="thumb" style="background-image:url('img/app.jpg');"></div>
+        <div class="body">
+          <div class="title">Conception et developpement d'une application d'aide à l'agriculture</div>
+          <div class="desc">AI-Forest Planner est une application mobile intelligente qui aide les agriculteurs à optimiser leurs cultures grâce à l’IA. Elle améliore la productivité tout en favorisant une agriculture durable et respectueuse de l’environnement.
+.</div>
+          <div class="tags"><span class="tag">Flutter</span><span class="tag">Android Studio</span><span class="tag">IOS/Android</span></div>
+        </div>
+      </article>
+
+      <!-- Projet 3 -->
+      <article class="project" role="article" aria-label="Plateforme d'observabilité">
+        <div class="thumb" style="background-image:url('img/das.png');"></div>
+        <div class="body">
+          <div class="title">DAS - Data Analytic Solutions</div>
+          <div class="desc">Data Analytic Solutions (DAS) est une entreprise spécialisée dans l’analyse de données et l’intelligence artificielle, aidant les organisations à transformer leurs informations en décisions stratégiques..</div>
+          <div class="tags"><span class="tag">Power BI</span><span class="tag">Python</span><span class="tag">Entrepreneuriat</span></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="work" class="work-card" aria-labelledby="workTitle">
+  <div class="work-grid">
+    <!-- Main content -->
+    <main class="work-main">
+      <header class="work-header">
+        <h2 id="workTitle">Réalisations & impact</h2>
+      </header>
+
+      <div class="achievements">
+        <article class="achievement">
+          <div class="meta">
+            <span class="role">Responsable Informatique</span>
+            <span class="org">— Fondation Congolaise pour la Recherche Médicale (FCRM)</span>
+          </div>
+          <h3 class="title">Modernisation du parc & sécurité</h3>
+          <p class="desc muted">
+            Conception et mise en œuvre d’une stratégie de sécurité, procédures de backup & PRA, et audits périodiques — disponibilité et résilience accrues.
+          </p>
+          <div class="kpi-row">
+            <div class="kpi"><strong>+99%</strong><span class="kpi-label">Disponibilité services</span></div>
+            <div class="kpi"><strong>—</strong><span class="kpi-label">Incidents critiques</span></div>
+          </div>
+        </article>
+
+        <article class="achievement">
+          <div class="meta">
+            <span class="role">Formateur Data</span>
+            <span class="org">— Incubateur KOSALA</span>
+          </div>
+          <h3 class="title">Capacitation des porteurs de projet</h3>
+          <p class="desc muted">
+            Programmes modulaires (Python, Power BI, Tableau) : +30 porteurs formés, 5 projets incubés passant à la phase pilote.
+          </p>
+        </article>
+
+        <article class="achievement">
+          <div class="meta">
+            <span class="role">Architecte Technique</span>
+          </div>
+          <h3 class="title">ERP & Solutions Web sécurisées</h3>
+          <p class="desc muted">
+            Développement et déploiement de modules Odoo, intégration paiements et téléphonie IP — réduction des frictions opérationnelles.
+          </p>
+        </article>
+
+        <article class="achievement">
+          <div class="meta">
+            <span class="role">Data & BI</span>
+          </div>
+          <h3 class="title">Tableaux de bord décisionnels</h3>
+          <p class="desc muted">
+            Automatisation des rapports (Power BI) pour le pilotage du contrôle interne — gain de temps d’analyse et visibilité consolidée.
+          </p>
+        </article>
+      </div>
+    </main>
+
+    <!-- Sidebar -->
+    <aside class="work-aside" aria-labelledby="contactTitle">
+      <div class="aside-card" role="region" aria-label="Contact information">
+        <h4 id="contactTitle"></h4>
+
+        <div class="contact-name">Marland Nicème <span class="bold">ISSANGOU</span></div>
+        <p class="contact-role">Consultant IT | Ingénieur | Entrepreneur</p>
+
+        <dl class="contact-list">
+          <div class="contact-row">
+            <dt class="sr-only">Téléphone</dt>
+            <dd>
+              <a class="contact-link" href="tel:+242065409959" aria-label="Appeler Marland Niceme Issangou">
+                <!-- phone SVG -->
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 01.9-.27 11.72 11.72 0 003.7.6 1 1 0 011 1v3.5a1 1 0 01-1 1A18 18 0 013 5a1 1 0 011-1h3.5a1 1 0 011 1 11.72 11.72 0 00.6 3.7 1 1 0 01-.27.9l-2.2 2.2z" /></svg>
+                <span class="contact-text">+242 06 540 99 59 </span>
+              </a>
+            </dd>
+          </div>
+
+          <div class="contact-row">
+            <dt class="sr-only">Email</dt>
+            <dd>
+              <a class="contact-link" href="mailto:contac@marlandniceme.com" aria-label="Envoyer un email à Marland Niceme Issangou">
+                <!-- mail SVG -->
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4z" fill="none"/><path d="M20 6H4v12h16V6zm-2 3l-6 4-6-4V8l6 4 6-4v1z"/></svg>
+                <span class="contact-text">contact@marlandniceme.com</span>
+              </a>
+            </dd>
+          </div>
+
+          <div class="contact-row">
+            <dt class="sr-only">Localisation</dt>
+            <dd class="contact-plain">
+              <!-- location SVG -->
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.14 2 5 5.14 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.86-3.14-7-7-7zm0 9.5A2.5 2.5 0 1112 6a2.5 2.5 0 010 5.5z"/></svg>
+              <span class="contact-text">Brazzaville, Congo</span>
+            </dd>
+          </div>
+        </dl>
+
+
+        <div class="social-row" aria-label="Réseaux sociaux">
+         
+<div class="footer-socials" style="margin-top:10px;">
+
+    <!-- LinkedIn -->
+    <a href="https://www.linkedin.com/in/marland-niceme-issangou-03626735b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" 
+       target="_blank" title="LinkedIn" aria-label="LinkedIn" class="social-link">
+      <svg class="social-icon" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM0 8h5v16H0V8zm7 0h4.78v2.2h.07c.67-1.27 2.31-2.6 4.76-2.6 5.09 0 6.03 3.35 6.03 7.71V24H18v-7.61c0-1.82-.03-4.16-2.54-4.16-2.54 0-2.93 1.98-2.93 4.02V24H7V8z"/>
+      </svg>
+    </a>
+
+    <!-- Facebook -->
+    <a href="https://www.facebook.com/share/17ZVKj9ADf/?mibextid=wwXIfr" 
+       target="_blank" title="Facebook" aria-label="Facebook" class="social-link">
+      <svg class="social-icon" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24h11.498V14.708H9.691V11.08h3.132V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.505 0-1.796.716-1.796 1.765v2.311h3.587l-.467 3.628h-3.12V24h6.116C23.407 24 24 23.407 24 22.676V1.325C24 .593 23.407 0 22.675 0z"/>
+      </svg>
+    </a>
+
+    <!-- Instagram -->
+    <a href="https://www.instagram.com/marland_niceme?igsh=bmFmNWRvc2kxcGZm&utm_source=qr" 
+       target="_blank" title="Instagram" aria-label="Instagram" class="social-link">
+      <svg class="social-icon" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7.5 2h9A5.5 5.5 0 0122 7.5v9A5.5 5.5 0 0116.5 22h-9A5.5 5.5 0 012 16.5v-9A5.5 5.5 0 017.5 2zm0 2A3.5 3.5 0 004 7.5v9A3.5 3.5 0 007.5 20h9a3.5 3.5 0 003.5-3.5v-9A3.5 3.5 0 0016.5 4h-9zM12 7a5 5 0 110 10 5 5 0 010-10zm0 2a3 3 0 100 6 3 3 0 000-6zm4.75-.88a1.12 1.12 0 110 2.24 1.12 1.12 0 010-2.24z"/>
+      </svg>
+    </a>
+
+  </div>
+</div>
+
+
+        <hr />
+
+        <div class="aside-section">
+          <h5 class="aside-title">Compétences</h5>
+          <ul class="tag-list">
+            <li>Cybersécurité</li>
+            <li>Audit IT & Gouvernance</li>
+            <li>Admin Systèmes & Réseaux</li>
+            <li>Data & BI (Python, Power BI)</li>
+            <li>Gestion de parc informatique</li>
+            <li>ADeveloppement web et mobile</li>
+            <li>Conception et Deploiement Architecture Cloud</li>
+            <li>Accompagnement dans l'expertise et achat d'équipements informatique</li>
+          </ul>
+        </div>
+
+        <div class="aside-footer muted small">Langues : Français  • Anglais</div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+  </section>
+
+  <!-- PARTNERS -->
+  <section class="card" aria-labelledby="partnersTitle" style="margin-bottom:18px;" id="partners">
+    <h2 id="partnersTitle">Partenaires</h2>
+    <p class="small muted">Quelques partenaires avec lesquelles je collabore — cliquez pour en savoir plus.</p>
+
+    <div class="partners-wrap" aria-hidden="false">
+      <div class="partners-inner" role="list" aria-label="Liste des partenaires (défilant)">
+        <div class="partners-track" aria-hidden="true">
+          <a class="partners-item" role="listitem" href="fcrm-congo.com" target="_blank" rel="noopener noreferrer">
+            <img src="Partenaires/Logo FCRM.jpg" alt=" " onerror="this.style.display='none'">
+            <span class="pname">FCRM</span>
+          </a>
+          <a class="partners-item" role="listitem" href="https://kosalapme.wordpress.com/" target="_blank" rel="noopener noreferrer">
+            <img src="Partenaires/kosala.jpeg" alt=" " onerror="this.style.display='none'">
+            <span class="pname">Kosala Africa PME</span>
+          </a>
+          <a class="partners-item" role="listitem" href="https://www.facebook.com/share/16R5Y9FTyN/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">
+            <img src="Partenaires/logo ss.png" alt=" " onerror="this.style.display='none'">
+            <span class="pname">DAS</span>
+          </a>
+          <a class="partners-item" role="listitem" href=" https://www.facebook.com/share/1BReLjbXfY/?mibextid=wwXIfr " target="_blank" rel="noopener noreferrer">
+            <img src="Partenaires/cgdt.jpg" alt="Red Hat logo" onerror="this.style.display='none'">
+            <span class="pname">CGDT</span>
+          </a>
+           <a class="partners-item" role="listitem" href="https://www.facebook.com/share/16R5Y9FTyN/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">
+            <img src="Partenaires/Logo.png" alt=" " onerror="this.style.display='none'">
+            <span class="pname">Ai-Forest Planner</span>
+          </a>
+
+
+           <a class="partners-item" role="listitem" href="fcrm-congo.com" target="_blank" rel="noopener noreferrer">
+            <img src="Partenaires/Logo FCRM.jpg" alt=" " onerror="this.style.display='none'">
+            <span class="pname">FCRM</span>
+          </a>
+          <a class="partners-item" role="listitem" href="https://kosalapme.wordpress.com/" target="_blank" rel="noopener noreferrer">
+            <img src="Partenaires/kosala.jpeg" alt=" " onerror="this.style.display='none'">
+            <span class="pname">Kosala Africa PME</span>
+          </a>
+          <a class="partners-item" role="listitem" href="https://www.facebook.com/share/16R5Y9FTyN/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">
+            <img src="Partenaires/logo ss.png" alt=" " onerror="this.style.display='none'">
+            <span class="pname">DAS</span>
+          </a>
+          <a class="partners-item" role="listitem" href=" https://www.facebook.com/share/1BReLjbXfY/?mibextid=wwXIfr " target="_blank" rel="noopener noreferrer">
+            <img src="Partenaires/cgdt.jpg" alt="Red Hat logo" onerror="this.style.display='none'">
+            <span class="pname">CGDT</span>
+          </a>
+           <a class="partners-item" role="listitem" href="https://www.facebook.com/share/16R5Y9FTyN/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">
+            <img src="Partenaires/Logo.png" alt=" " onerror="this.style.display='none'">
+            <span class="pname">Ai-Forest Planner</span>
+          </a>
+          
+
+        </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="card" id="testimonials" aria-labelledby="testiTitle">
+  <h2 id="testiTitle">Ce que disent mes partenaires et clients</h2>
+
+  <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; margin-top:14px;">
+    
+    <!-- Témoignage FCRM -->
+    <div class="testimonial">
+      <strong>Fondation Congolaise pour la Recherche Médicale (FCRM)</strong>
+      <div class="small muted" style="margin-top:6px;">
+        « Grâce à son accompagnement, nous avons modernisé notre réseau informatique et amélioré la sécurité de nos données sensibles. 
+        L'ingénieur a su mettre en place des solutions fiables et adaptées à nos besoins de recherche et de collaboration. »
+      </div>
+    </div>
+
+    <!-- Témoignage Khody -->
+    <div class="testimonial">
+      <strong>Khody — Entrepreneur</strong>
+      <div class="small muted" style="margin-top:6px;">
+        « La formation dispensée m'a permis de maîtriser les bases des TIC et d’utiliser efficacement les outils numériques pour mon business. 
+         Sa pédagogie et sa patience ont rendu l’apprentissage accessible et concret. »
+      </div>
+    </div>
+
+    <!-- Témoignage Kosala -->
+    <div class="testimonial">
+      <strong>Incubateur KOSALA</strong>
+      <div class="small muted" style="margin-top:6px;">
+        « En tant que support IT pour KOSALA, il a fait preuve d’une expertise remarquable. 
+        Il a assuré la maintenance du parc informatique, accompagné les startups incubées et renforcé notre infrastructure numérique avec efficacité et rigueur. »
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+  <!-- CONTACT -->
+<section class="card contact-modern" id="contact" aria-labelledby="contactTitle">
+  <h2 id="contactTitle">Contact</h2>
+
+  <div class="contact-layout">
+  <!-- FORMULAIRE FORMSpree -->
+  <form id="contactForm" action="https://formspree.io/f/mqayjvdr" method="POST" novalidate>
+    <input type="text" name="name" id="name" placeholder="Votre nom" aria-label="Votre nom" required>
+    <input type="email" name="email" id="email" placeholder="Email" aria-label="Votre email" required>
+    <textarea name="message" id="message" rows="6" placeholder="Laissez-moi un message" aria-label="Message" required></textarea>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Envoyer</button>
+      <button type="button" class="btn btn-ghost" onclick="window.location.href='mailto:marlandking242@gmail.com'">Envoyer par email</button>
+    </div>
+
+    <div id="formMsg" class="form-msg" role="status" aria-live="polite"></div>
+  </form>
+</div>
+
+<!-- SCRIPT DE GESTION FORMSpree -->
+<script>
+const form = document.getElementById('contactForm');
+const msg = document.getElementById('formMsg');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  msg.textContent = "Envoi en cours...";
+  msg.style.color = "#444";
+
+  const formData = new FormData(form);
+
+  try {
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (res.ok) {
+      msg.textContent = "✅ Message envoyé avec succès. Merci !";
+      msg.style.color = "green";
+      form.reset();
+    } else {
+      const data = await res.json().catch(()=>null);
+      msg.textContent = data?.error || "❌ Erreur lors de l'envoi. Réessaie plus tard.";
+      msg.style.color = "crimson";
+      console.error('Formspree error:', data);
+    }
+  } catch (err) {
+    msg.textContent = "❌ Erreur réseau. Vérifie ta connexion.";
+    msg.style.color = "crimson";
+    console.error('Network error:', err);
+  }
+});
+</script>
+
+
+
+    <!-- INFOS CONTACT -->
+    <div class="contact-sidebar">
+      <div class="info-card">
+        <h3>Me contacter</h3>
+        <p class="small muted"></p>
+
+        <div class="info-block">
+          <strong>Professionnel</strong>
+          <div class="small muted">contact@marlandniceme.com</div>
+          <div class="spacer"></div>
+          <strong>Personnel</strong>
+          <div class="small muted"> +237 677 20 26 53</div>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <h3>Disponibilités</h3>
+        <p class="small muted">Disponible pour missions courtes et longues. Interventions & conférences sur demande.</p>
+
+        <div class="info-block">
+          <strong>Fuseau</strong>
+          <div class="small muted">Africa/Brazzaville (GMT+1)</div>
+          <div class="spacer"></div>
+          <strong>Taux</strong>
+          <div class="small muted">Sur demande</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">Marland Niceme ISSANGOU</div>
+      <div class="muted small">Ingénieur IT & Consultant — Cloud, Sécurité & Ingénierie des plateformes</div>
+      <div class="legal">© <span id="ftYear"></span> Marland Niceme ISSANGOU — Tous droits réservés.</div>
+    </div>
+
+    <div>
+      <strong style="color:#cfe8ff;">Services</strong>
+      <div class="footer-links" style="margin-top:10px;">
+        <a href="#projects">Support IT</a>
+        <a href="#contact">Conseil & Ateliers</a>
+        <a href="#work">Sécurité & Conformité</a>
+      </div>
+    </div>
+
+    <div>
+  <strong style="color:#cfe8ff;">Réseaux</strong>
+  <div class="footer-socials" style="margin-top:10px;">
+
+    <!-- LinkedIn -->
+    <a href="https://www.linkedin.com/in/marland-niceme-issangou-03626735b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" 
+       target="_blank" title="LinkedIn" aria-label="LinkedIn" class="social-link">
+      <svg class="social-icon" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM0 8h5v16H0V8zm7 0h4.78v2.2h.07c.67-1.27 2.31-2.6 4.76-2.6 5.09 0 6.03 3.35 6.03 7.71V24H18v-7.61c0-1.82-.03-4.16-2.54-4.16-2.54 0-2.93 1.98-2.93 4.02V24H7V8z"/>
+      </svg>
+    </a>
+
+    <!-- Facebook -->
+    <a href="https://www.facebook.com/share/17ZVKj9ADf/?mibextid=wwXIfr" 
+       target="_blank" title="Facebook" aria-label="Facebook" class="social-link">
+      <svg class="social-icon" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24h11.498V14.708H9.691V11.08h3.132V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.505 0-1.796.716-1.796 1.765v2.311h3.587l-.467 3.628h-3.12V24h6.116C23.407 24 24 23.407 24 22.676V1.325C24 .593 23.407 0 22.675 0z"/>
+      </svg>
+    </a>
+
+    <!-- Instagram -->
+    <a href="https://www.instagram.com/marland_niceme?igsh=bmFmNWRvc2kxcGZm&utm_source=qr" 
+       target="_blank" title="Instagram" aria-label="Instagram" class="social-link">
+      <svg class="social-icon" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7.5 2h9A5.5 5.5 0 0122 7.5v9A5.5 5.5 0 0116.5 22h-9A5.5 5.5 0 012 16.5v-9A5.5 5.5 0 017.5 2zm0 2A3.5 3.5 0 004 7.5v9A3.5 3.5 0 007.5 20h9a3.5 3.5 0 003.5-3.5v-9A3.5 3.5 0 0016.5 4h-9zM12 7a5 5 0 110 10 5 5 0 010-10zm0 2a3 3 0 100 6 3 3 0 000-6zm4.75-.88a1.12 1.12 0 110 2.24 1.12 1.12 0 010-2.24z"/>
+      </svg>
+    </a>
+
+  </div>
+</div>
+
+
+</footer>
+
+<script>
+  
+  document.addEventListener('DOMContentLoaded', function () {
+    // --- footer year ---
+    var ft = document.getElementById('ftYear'); if (ft) ft.textContent = new Date().getFullYear();
+
+    // --- Smooth scroll for nav links (respect anchors) ---
+    document.querySelectorAll('nav a').forEach(function(a){
+      a.addEventListener('click', function(e){
+        // allow default only for external links (href starts with http or mailto)
+        var href = a.getAttribute('href') || '';
+        if (href.indexOf('#') === 0) {
+          e.preventDefault();
+          var id = href.replace('#','');
+          var target = document.getElementById(id);
+          if (target) target.scrollIntoView({behavior:'smooth', block:'start'});
+        }
+      });
+    });
+
+    // --- Projects reveal ---
+    (function(){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if (entry.isIntersecting) { entry.target.classList.add('visible'); io.unobserve(entry.target); }
+        });
+      }, { root:null, rootMargin:'0px', threshold:0.12 });
+      document.querySelectorAll('.project').forEach(function(el){ io.observe(el); });
+    })();
+
+    // --- Drag & drop hero bg (preview) ---
+    (function(){
+      var heroBg = document.getElementById('heroBg');
+      if(!heroBg) return;
+      heroBg.addEventListener('dragover', function(e){ e.preventDefault(); heroBg.style.outline = '4px dashed rgba(255,255,255,0.12)'; });
+      heroBg.addEventListener('dragleave', function(){ heroBg.style.outline = 'none'; });
+      heroBg.addEventListener('drop', function(e){
+        e.preventDefault(); heroBg.style.outline = 'none';
+        var f = e.dataTransfer.files && e.dataTransfer.files[0]; if(!f) return;
+        if(!f.type.startsWith('image/')) return alert('Déposez un fichier image.');
+        var reader = new FileReader();
+        reader.onload = function(ev){ heroBg.style.backgroundImage = 'url('+ev.target.result+')'; };
+        reader.readAsDataURL(f);
+      });
+    })();
+
+    // --- prefers-reduced-motion for partners ---
+    (function(){ var mq = window.matchMedia('(prefers-reduced-motion: reduce)'); if(mq.matches) document.querySelectorAll('.partners-track').forEach(function(t){ t.style.animation = 'none'; }); })();
+
+    // --- demo contact form ---
+    (function(){
+      var form = document.getElementById('contactForm'); if(!form) return;
+      form.addEventListener('submit', function(e){ e.preventDefault();
+        var name = document.getElementById('name').value.trim(); var email = document.getElementById('email').value.trim(); var msg = document.getElementById('message').value.trim(); var el = document.getElementById('formMsg');
+        if(!name || !email || !msg){ el.textContent = 'Merci de renseigner nom, email et message.'; el.style.color = '#b45309'; return; }
+        el.textContent = 'Merci — votre message a été envoyé (démo).'; el.style.color = '#059669'; form.reset();
+      });
+    })();
+
+    // --- fix mobile textarea focus jump ---
+    (function(){
+      var textarea = document.getElementById('message');
+      if(!textarea) return;
+      textarea.addEventListener('focus', function(){
+        var sL = window.pageXOffset || document.documentElement.scrollLeft;
+        var sT = window.pageYOffset || document.documentElement.scrollTop;
+        setTimeout(function(){
+          try { window.scrollTo({ left: sL, top: sT, behavior: 'instant' in window ? 'instant' : 'auto' }); }
+          catch(e){ window.scrollTo(sL, sT); }
+        }, 10);
+      });
+      textarea.addEventListener('touchstart', function(){
+        var sL = window.pageXOffset || document.documentElement.scrollLeft;
+        var sT = window.pageYOffset || document.documentElement.scrollTop;
+        setTimeout(function(){ window.scrollTo(sL, sT); }, 10);
+      });
+    })();
+
+    // --- social buttons placeholders ---
+    (function(){ document.querySelectorAll('.social-btn').forEach(function(btn){ btn.addEventListener('click', function(e){ e.preventDefault(); }); }); })();
+
+    // --- Menu toggle (single robust implementation) ---
+    (function(){
+      var toggle = document.querySelector('.menu-toggle');
+      var nav = document.querySelector('nav.nav-links');
+
+      if (!toggle || !nav) return;
+
+      function openMenu() {
+        nav.classList.add('active');
+        toggle.setAttribute('aria-expanded','true');
+        // focus first link for accessibility
+        var first = nav.querySelector('a');
+        if (first) first.focus();
+      }
+      function closeMenu() {
+        nav.classList.remove('active');
+        toggle.setAttribute('aria-expanded','false');
+        toggle.focus();
+      }
+      function toggleMenu(e) {
+        e && e.stopPropagation();
+        if (nav.classList.contains('active')) closeMenu(); else openMenu();
+      }
+
+      // touch/click handling to avoid double events
+      var touchStarted = false;
+      toggle.addEventListener('touchstart', function(){ touchStarted = true; }, {passive:true});
+      toggle.addEventListener('click', function(e){
+        if (touchStarted) { touchStarted = false; return; }
+        toggleMenu(e);
+      });
+      toggle.addEventListener('touchend', function(e){
+        e.preventDefault();
+        toggleMenu(e);
+      }, {passive:false});
+
+      // close on click outside
+      document.addEventListener('click', function(e){
+        if (!nav.classList.contains('active')) return;
+        if (nav.contains(e.target) || toggle.contains(e.target)) return;
+        closeMenu();
+      });
+
+      // close on touchstart outside (mobile)
+      document.addEventListener('touchstart', function(e){
+        if (!nav.classList.contains('active')) return;
+        if (nav.contains(e.target) || toggle.contains(e.target)) return;
+        closeMenu();
+      }, {passive:true});
+
+      // close on Escape
+      document.addEventListener('keydown', function(e){
+        if (e.key === 'Escape' && nav.classList.contains('active')) closeMenu();
+      });
+
+      // close when a nav link is clicked (useful for anchors)
+      nav.querySelectorAll('a').forEach(function(a){
+        a.addEventListener('click', function(){ closeMenu(); });
+      });
+    })();
+
+  }); // end DOMContentLoaded
+</script>
+</body>
+</html>
